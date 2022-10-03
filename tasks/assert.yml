@@ -57,8 +57,8 @@
     that:
       - item.name is defined
       - item.name is string
-      - item.path is defined
-      - item.path is string
+      - (item.path is defined or item.paths is defined)
+      - (item.path is string or (item.paths is sequence and item.paths | length > 0))
     quiet: yes
   loop: "{{ logrotate_entries }}"
   loop_control:
