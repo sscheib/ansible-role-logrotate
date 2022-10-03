@@ -16,12 +16,14 @@
     src: "{{ logrotate_config_file }}.j2"
     dest: "{{ logrotate_config_directory }}/{{ logrotate_config_file }}"
     mode: "0644"
+    validate: 'logrotate -d {{ logrotate_config_directory }}/{{ logrotate_config_file }}'
 
 - name: Generate logrotate.d files
   ansible.builtin.template:
     src: entry.j2
     dest: "{{ logrotate_confd_directory }}/{{ item.name }}"
     mode: "0644"
+    validate: 'logrotate -d {{ logrotate_config_directory }}/{{ item.name }}'
   loop: "{{ logrotate_entries }}"
   when:
     - logrotate_entries is defined
