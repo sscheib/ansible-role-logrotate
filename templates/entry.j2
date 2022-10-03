@@ -1,6 +1,13 @@
 {{ ansible_managed | comment }}
 
-{{ item.path }} {
+{% if item.path is defined %}
+{{ item.path }}
+{% elif item.paths is defined %}
+{% for _path in item.paths %}
+{{ _path }}
+{% endfor %}
+{% endif %}
+{
 
 {% if item.frequency is defined %}    {{ item.frequency }}{% endif %}
 
