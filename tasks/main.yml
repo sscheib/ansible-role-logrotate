@@ -17,6 +17,7 @@
     dest: "{{ logrotate_config_directory }}/{{ logrotate_config_file }}"
     mode: "0644"
     validate: 'logrotate -d %s'
+  notify: 'Validate configuration'
 
 - name: Generate logrotate.d files
   ansible.builtin.template:
@@ -25,6 +26,7 @@
     mode: "0644"
     validate: 'logrotate -d %s'
   loop: "{{ logrotate_entries }}"
+  notify: 'Validate configuration'
   when:
     - logrotate_entries is defined
   loop_control:
