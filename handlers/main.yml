@@ -3,3 +3,4 @@
   ansible.builtin.shell:
     cmd: "logrotate -d {{ logrotate_config_directory }}/{{ logrotate_config_file }}" 
   changed_when: false
+  become: true

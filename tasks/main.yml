@@ -11,6 +11,7 @@
     name: "{{ logrotate_packages }}"
     state: present
     update_cache: yes
+  become: true
 
 - name: Configure logrotate
   ansible.builtin.template:
@@ -19,6 +20,7 @@
     mode: "0644"
     validate: 'logrotate -d %s'
   notify: 'Validate configuration'
+  become: true
 
 - name: Generate logrotate.d files
   ansible.builtin.template:
@@ -30,5 +32,6 @@
   notify: 'Validate configuration'
   when:
     - logrotate_entries is defined
+  become: true
   loop_control:
     label: "{{ item.name }}"
